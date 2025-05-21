@@ -1,61 +1,46 @@
-// dictionary.js
-const dictionary = [
-  { name: "Kitob", display: "book", audio: "../audio/dictionary/book.mp3" },
-  { name: "Stol", display: "table", audio: "audio/dictionary/table.mp3" },
-  { name: "Oyna", display: "window", audio: "audio/dictionary/window.mp3" },
-  { name: "Qalam", display: "pen", audio: "audio/dictionary/pen.mp3" },
-  { name: "Maktab", display: "school", audio: "audio/dictionary/school.mp3" },
-  { name: "Daraxt", display: "tree", audio: "audio/dictionary/tree.mp3" },
-  { name: "Uy", display: "house", audio: "audio/dictionary/house.mp3" },
-  { name: "Bola", display: "child", audio: "audio/dictionary/child.mp3" },
-  { name: "Qush", display: "bird", audio: "audio/dictionary/bird.mp3" },
-  { name: "Oqituvchi", display: "teacher", audio: "audio/dictionary/teacher.mp3" },
-  { name: "Mashina", display: "car", audio: "audio/dictionary/car.mp3" },
-  { name: "Kitobxona", display: "library", audio: "audio/dictionary/library.mp3" },
-  { name: "Ochiq", display: "open", audio: "audio/dictionary/open.mp3" },
-  { name: "Yopiq", display: "closed", audio: "audio/dictionary/closed.mp3" },
-  { name: "Do‘st", display: "friend", audio: "audio/dictionary/friend.mp3" },
-  { name: "Shahar", display: "city", audio: "audio/dictionary/city.mp3" },
-  { name: "Yo‘l", display: "road", audio: "audio/dictionary/road.mp3" },
-  { name: "Suv", display: "water", audio: "audio/dictionary/water.mp3" },
-  { name: "Issiq", display: "hot", audio: "audio/dictionary/hot.mp3" },
-  { name: "Sovuq", display: "cold", audio: "audio/dictionary/cold.mp3" }
+// Mevalar ma'lumotlari
+const fruits = [
+  { name: "Olma", display: "Apple", audio: "../audio/fruits/apple.mp3" },
+  { name: "Banan", display: "Banana", audio: "../audio/fruits/banana.mp3" },
+  { name: "Nok", display: "Pear", audio: "../audio/fruits/pear.mp3" },
+  { name: "Apelsin", display: "Orange", audio: "../audio/fruits/orange.mp3" },
+  { name: "Anor", display: "Pomegranate", audio: "../audio/fruits/pomegranate.mp3" },
+  { name: "Shaftoli", display: "Peach", audio: "../audio/fruits/peach.mp3" },
+  { name: "Gilos", display: "Cherry", audio: "../audio/fruits/cherry.mp3" },
+  { name: "Qovun", display: "Melon", audio: "../audio/fruits/melon.mp3" },
+  { name: "Tarvuz", display: "Watermelon", audio: "../audio/fruits/watermelon.mp3" },
+  { name: "Olxo'ri", display: "Gooseberry", audio: "../audio/fruits/gooseberry.mp3" }
 ];
 
-let currentWord = null;
+let currentFruit = null;
 let score = 0;
-let quizAnswered = false;
 
-// Audio o'ynatish funksiyasi (audio fayl manzili orqali)
+// Audio o‘ynatish funksiyasi
 function playAudio(src) {
   const audio = new Audio(src);
-  audio.currentTime = 0;
-  audio.play().catch(err => {
-    console.error("Audio o‘ynatishda xatolik:", err);
-  });
+  audio.play();
 }
 
 // Ballni yangilash
 function updateScore() {
-  document.getElementById("score").textContent = `Ball: ${score}`;
+  document.getElementById("score").textContent = score;
 }
 
-// Lug'atdagi so'zlarni tugmalar sifatida ko'rsatish (audio uchun)
-function loadDictionaryButtons() {
-  const container = document.getElementById("dictionary-list");
+// Mevalar tugmalarini yaratish (faqat audio o‘ynaydi)
+function loadFruitButtons() {
+  const container = document.getElementById("fruit-buttons");
   container.innerHTML = "";
 
-  dictionary.forEach(item => {
+  fruits.forEach(fruit => {
     const col = document.createElement("div");
-    col.className = "col-6 col-md-3 mb-3";
+    col.className = "col-6 col-md-2 mb-3";
 
     const btn = document.createElement("button");
-    btn.className = "btn btn-outline-success btn-lg w-100";
-    btn.textContent = item.name;
-    btn.title = item.display;
+    btn.className = "btn btn-outline-danger btn-lg w-100";
+    btn.textContent = fruit.name;
 
     btn.addEventListener("click", () => {
-      playAudio(item.audio);
+      playAudio(fruit.audio);
     });
 
     col.appendChild(btn);
@@ -63,52 +48,40 @@ function loadDictionaryButtons() {
   });
 }
 
-// Quiz savolini yaratish
-function loadDictionaryQuiz() {
-  const quizEl = document.getElementById("quiz-word");
+// Quizni yuklash
+function loadQuiz() {
+  const quizNameEl = document.getElementById("quiz-name");
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
 
-  // Tasodifiy so'z tanlash
-  currentWord = dictionary[Math.floor(Math.random() * dictionary.length)];
-  quizEl.textContent = currentWord.name;
-  quizAnswered = false;
+  // Tasodifiy meva tanlash
+  currentFruit = fruits[Math.floor(Math.random() * fruits.length)];
+  quizNameEl.textContent = currentFruit.display;
 
-  const correctAnswer = currentWord.display;
-
-  // Variantlar uchun ro'yxat (to'g'ri + 3 noto'g'ri)
-  const options = [currentWord];
-
+  // Variantlar (to‘g‘ri + 3 ta noto‘g‘ri)
+  const options = [currentFruit];
   while (options.length < 4) {
-    const randomOption = dictionary[Math.floor(Math.random() * dictionary.length)];
-    if (!options.some(opt => opt.display === randomOption.display)) {
-      options.push(randomOption);
+    const randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
+    if (!options.some(f => f.name === randomFruit.name)) {
+      options.push(randomFruit);
     }
   }
 
-  // Variantlarni aralashtirish
+  // Aralashtirish
   options.sort(() => Math.random() - 0.5);
 
-  options.forEach(option => {
+  // Tugmalarni yaratish
+  options.forEach(fruit => {
     const btn = document.createElement("button");
     btn.className = "btn btn-outline-dark m-2 px-4 py-2";
-    btn.textContent = option.display;
+    btn.textContent = fruit.name;
 
     btn.onclick = () => {
-      if (quizAnswered) return;
-
-      playAudio(option.audio);
-
-      if (option.display === correctAnswer) {
-        score += 5;
+      playAudio(fruit.audio);
+      if (fruit.name === currentFruit.name) {
+        score++;
         updateScore();
-        quizAnswered = true;
-
-        setTimeout(() => {
-          loadDictionaryQuiz();
-        }, 1000);
-      } else {
-        btn.classList.add("btn-danger");
+        loadQuiz();
       }
     };
 
@@ -116,8 +89,9 @@ function loadDictionaryQuiz() {
   });
 }
 
+// Sahifa yuklanganda ishga tushadi
 document.addEventListener("DOMContentLoaded", () => {
   updateScore();
-  loadDictionaryButtons();
-  loadDictionaryQuiz();
+  loadFruitButtons();
+  loadQuiz();
 });
