@@ -1,78 +1,110 @@
+// Boshlang'ich ball
 let score = 0;
 
+// Raqamlar va ularning inglizcha nomlari
 const numberWords = {
   1: "One",
   2: "Two",
   3: "Three",
   4: "Four",
   5: "Five",
-  6: "Sex",
+  6: "Six",
   7: "Seven",
   8: "Eight",
   9: "Nine",
   10: "Ten"
 };
 
-// Son raqam uchun audio o'ynatish funksiyasi
-function playNumber(number) {
+let currentNumber = null;
+let quizAnswered = false; // foydalanuvchi javob bergan-yo‘qligini tekshiruvchi flag
+
+// 🔊 Audio o‘ynatish funksiyasi
+function playNumberAudio(number) {
   const audio = new Audio(`../audio/numbers/${number}.mp3`);
-  audio.play().catch(e => {
-    console.log("Audio ijro etishda xato:", e);
+  audio.play().catch(err => {
+    console.log("Audio o‘ynatishda xatolik:", err);
   });
 }
 
-// Ballni yangilash
-function updateScore(points) {
-  score += points;
+// 🧮 Ballni yangilash
+function updateScore() {
   document.getElementById("score").textContent = `Ball: ${score}`;
 }
 
-// Quiz boshlash
-function startQuiz() {
-  const quizNum = Math.floor(Math.random() * 10) + 1;
+// 🔘 1 dan 10 gacha tugmalarni yaratish (o‘rganish uchun)
+function loadNumberButtons() {
+  const container = document.getElementById("number-buttons");
+  container.innerHTML = "";
 
-  // Savolni matn ko'rinishida chiqaramiz
-  document.getElementById("quiz-number").textContent = numberWords[quizNum];
+  for (let i = 1; i <= 10; i++) {
+    const col = document.createElement("div");
+    col.className = "col-4 col-md-2 mb-3";
 
+    const btn = document.createElement("button");
+    btn.className = "btn btn-outline-primary btn-lg w-100 number-btn";
+    btn.textContent = i;
+    btn.dataset.number = i;
+
+    // Faqat audio o‘ynatish, ball qo‘shilmaydi
+    btn.addEventListener("click", () => {
+      playNumberAudio(i);
+    });
+
+    col.appendChild(btn);
+    container.appendChild(col);
+  }
+}
+
+// ❓ Quiz savolini yaratish
+function loadNumberQuiz() {
+  const quizEl = document.getElementById("quiz-word");
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
 
-  let options = [quizNum];
+  currentNumber = Math.floor(Math.random() * 10) + 1;
+  quizEl.textContent = numberWords[currentNumber];
+  quizAnswered = false;
+
+  let options = [currentNumber];
   while (options.length < 4) {
-    let random = Math.floor(Math.random() * 10) + 1;
-    if (!options.includes(random)) options.push(random);
+    const rand = Math.floor(Math.random() * 10) + 1;
+    if (!options.includes(rand)) options.push(rand);
   }
 
-  options.sort(() => Math.random() - 0.5); // variantlarni aralashtirish
+  // Aralashtirish
+  options.sort(() => Math.random() - 0.5);
 
-  options.forEach((opt) => {
+  options.forEach(option => {
     const btn = document.createElement("button");
-    btn.textContent = opt;
     btn.className = "btn btn-outline-dark m-2 px-4 py-2";
+    btn.textContent = option;
+
     btn.onclick = () => {
-      if (opt === quizNum) {
-        // alert("✅ To‘g‘ri!");
-        updateScore(5);
+      if (quizAnswered) return; // Faqat bir marta javob berilsin
+
+      playNumberAudio(option);
+
+      if (option === currentNumber) {
+        score += 5;
+        updateScore();
+        quizAnswered = true;
+
+        // Keyingi savolni 1 soniyadan so‘ng yuklash
+        setTimeout(() => {
+          loadNumberQuiz();
+        }, 1000);
       } else {
-        // alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
+        btn.classList.add("btn-danger"); // noto‘g‘ri javob ko‘rsatiladi
       }
-      startQuiz();
     };
+
     optionsContainer.appendChild(btn);
   });
 }
 
-// Sahifa to'liq yuklangandan so'ng ishlash
-document.addEventListener("DOMContentLoaded", function () {
-  const buttons = document.querySelectorAll(".number-btn");
-
-  buttons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const number = parseInt(btn.dataset.number);
-      playNumber(number);
-      updateScore(1);
-    });
-  });
-
-  startQuiz(); // Quizni boshlash
+// 📦 DOM yuklanganda ishga tushirish
+document.addEventListener("DOMContentLoaded", () => {
+  updateScore();
+  loadNumberButtons();
+  loadNumberQuiz();
 });

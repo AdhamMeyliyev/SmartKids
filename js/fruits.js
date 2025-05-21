@@ -1,100 +1,64 @@
+// Mevalar ma'lumotlari
 const fruits = [
-  { name: "olma", display: "Apple", audio: "../audio/fruits/apple.mp3" },
-  { name: "banan", display: "Banana", audio: "../audio/fruits/banana.mp3" },
-  { name: "nok", display: "Pear", audio: "../audio/fruits/pear.mp3" },
-  { name: "apelsin", display: "Orange", audio: "../audio/fruits/orange.mp3" },
-  { name: "anor", display: "Pomegranate", audio: "../audio/fruits/pomegranate.mp3" },
-  { name: "shaftoli", display: "Peach", audio: "../audio/fruits/peach.mp3" },
-  { name: "gilos", display: "Cherry", audio: "../audio/fruits/cherry.mp3" },
-  { name: "qovun", display: "Melon", audio: "../audio/fruits/melon.mp3" },
-  { name: "tarvuz", display: "Watermelon", audio: "../audio/fruits/watermelon.mp3" },
-  { name: "olxo'ri", display: "Gooseberry", audio: "../audio/fruits/gooseberry.mp3" },
+  { name: "Olma", display: "Apple", audio: "../audio/fruits/apple.mp3" },
+  { name: "Banan", display: "Banana", audio: "../audio/fruits/banana.mp3" },
+  { name: "Nok", display: "Pear", audio: "../audio/fruits/pear.mp3" },
+  { name: "Apelsin", display: "Orange", audio: "../audio/fruits/orange.mp3" },
+  { name: "Anor", display: "Pomegranate", audio: "../audio/fruits/pomegranate.mp3" },
+  { name: "Shaftoli", display: "Peach", audio: "../audio/fruits/peach.mp3" },
+  { name: "Gilos", display: "Cherry", audio: "../audio/fruits/cherry.mp3" },
+  { name: "Qovun", display: "Melon", audio: "../audio/fruits/melon.mp3" },
+  { name: "Tarvuz", display: "Watermelon", audio: "../audio/fruits/watermelon.mp3" },
+  { name: "Olxo'ri", display: "Gooseberry", audio: "../audio/fruits/gooseberry.mp3" }
 ];
 
-let score = 0;
 let currentFruit = null;
-let audioPlayer = null;
+let score = 0;
 
-function updateScore() {
-  document.getElementById("score").textContent = `Ball: ${score}`;
-}
-
+// Audio o‘ynatish funksiyasi
 function playAudio(src) {
-  try {
-    if (audioPlayer) {
-      audioPlayer.pause();
-      audioPlayer.currentTime = 0;
-    }
-    audioPlayer = new Audio(src);
-
-    // audio play promise
-    audioPlayer.play()
-      .then(() => {
-        console.log(`Audio o‘ynatildi: ${src}`);
-      })
-      .catch((error) => {
-        console.error(`Audio ijro etishda xatolik: ${error}`);
-        alert("Audio o‘ynatishda muammo yuz berdi. Iltimos, sahifani yangilang va yana urinib ko‘ring.");
-      });
-  } catch (e) {
-    console.error("Audio ijro etishda kutilmagan xatolik:", e);
-  }
+  const audio = new Audio(src);
+  audio.play();
 }
 
+// Ballni yangilash
+function updateScore() {
+  document.getElementById("score").textContent = score;
+}
+
+// Mevalar tugmalarini yaratish (faqat audio o‘ynaydi)
 function loadFruitButtons() {
   const container = document.getElementById("fruit-buttons");
   container.innerHTML = "";
 
-  fruits.forEach((fruit) => {
+  fruits.forEach(fruit => {
     const col = document.createElement("div");
     col.className = "col-6 col-md-2 mb-3";
 
     const btn = document.createElement("button");
-    btn.className = "btn btn-outline-danger btn-lg w-100 fruit-btn";
+    btn.className = "btn btn-outline-danger btn-lg w-100";
     btn.textContent = fruit.name;
-    btn.dataset.name = fruit.name;
 
-  btn.addEventListener("click", () => {
-  playAudio(fruit.audio).then(() => {
-    if (currentFruit && fruit.name === currentFruit.name) {
-      score++;
-      updateScore();
-      alert("✅ To‘g‘ri javob!");
-      loadQuiz();
-    } else {
-      alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
-    }
-  }).catch(() => {
-    // Agar audio ijro etilmasa ham javobni tekshirish
-    if (currentFruit && fruit.name === currentFruit.name) {
-      score++;
-      updateScore();
-      alert("✅ To‘g‘ri javob!");
-      loadQuiz();
-    } else {
-      alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
-    }
-  });
-});
-
+    btn.addEventListener("click", () => {
+      playAudio(fruit.audio);
+    });
 
     col.appendChild(btn);
     container.appendChild(col);
   });
 }
 
+// Quizni yuklash
 function loadQuiz() {
   const quizNameEl = document.getElementById("quiz-name");
   const optionsContainer = document.getElementById("quiz-options");
   optionsContainer.innerHTML = "";
 
-  // Tasodifiy meva tanlash (savol uchun)
+  // Tasodifiy meva tanlash
   currentFruit = fruits[Math.floor(Math.random() * fruits.length)];
-
-  // Savolda inglizcha nom (display) ko'rsatiladi
   quizNameEl.textContent = currentFruit.display;
 
-  // Variantlar: to'g'ri javob + 3 ta noto'g'ri javob, lekin variantlar o'zbekcha 'name' bo'ladi
+  // Variantlar (to‘g‘ri + 3 ta noto‘g‘ri)
   const options = [currentFruit];
   while (options.length < 4) {
     const randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
@@ -103,26 +67,21 @@ function loadQuiz() {
     }
   }
 
-  // Variantlarni aralashtirish
+  // Aralashtirish
   options.sort(() => Math.random() - 0.5);
 
-  // Variant tugmalarini yaratish
-  options.forEach((fruit) => {
+  // Tugmalarni yaratish
+  options.forEach(fruit => {
     const btn = document.createElement("button");
     btn.className = "btn btn-outline-dark m-2 px-4 py-2";
-    // Bu yerda variant sifatida o'zbekcha nom chiqsin:
     btn.textContent = fruit.name;
 
     btn.onclick = () => {
       playAudio(fruit.audio);
-
       if (fruit.name === currentFruit.name) {
         score++;
         updateScore();
-        // alert("✅ To‘g‘ri!");
         loadQuiz();
-      } else {
-        // alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
       }
     };
 
@@ -130,7 +89,7 @@ function loadQuiz() {
   });
 }
 
-
+// Sahifa yuklanganda ishga tushadi
 document.addEventListener("DOMContentLoaded", () => {
   updateScore();
   loadFruitButtons();
