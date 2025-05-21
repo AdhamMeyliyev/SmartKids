@@ -59,24 +59,26 @@
     }
     /* Hayvon tugmalari uchun grid */
     #animal-buttons {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+     display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 15px;
-		
-			width: 80vw;
+      justify-content: center;
       margin-bottom: 2rem;
     }
     #animal-buttons button {
+      padding: 0.6rem 1rem;
       font-weight: 600;
-			width: auto	 !important;
       font-size: 1.1rem;
       color: #0a3d62;
-      background-color: #d1e7dd;
-      border: none;
-      border-radius: 12px;
-      padding: 0.75rem 1rem;
-      box-shadow: 0 4px 8px rgba(43, 192, 160, 0.3);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      background-color: white;
+      border: 2px solid #38ada9;
+      border-radius: 14px;
+      box-shadow: 0 4px 8px rgba(56, 173, 169, 0.3);
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.3s ease;
       cursor: pointer;
       user-select: none;
     }

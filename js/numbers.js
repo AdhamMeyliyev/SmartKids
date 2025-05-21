@@ -51,10 +51,10 @@ function startQuiz() {
     btn.className = "btn btn-outline-dark m-2 px-4 py-2";
     btn.onclick = () => {
       if (opt === quizNum) {
-        alert("✅ To‘g‘ri!");
+        // alert("✅ To‘g‘ri!");
         updateScore(5);
       } else {
-        alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
+        // alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
       }
       startQuiz();
     };
