@@ -30,7 +30,7 @@ let quizAnswered = false;
 // 🔊 Audio o‘ynatish (agar ovozlar bo‘lsa, yo‘riqnoma shu yerda)
 // Bu holatda audio fayllar nomlari inglizcha so'zlar bilan bir xil deb faraz qilamiz
 function playAudio(wordEng) {
-  const audio = new Audio(`../audio/dictionary/${wordEng.toLowerCase()}.mp3`);
+  const audio = new Audio(`../audio/dictionary/${wordEng}.mp3`);
   audio.play().catch(err => {
     console.log("Audio o‘ynatishda xatolik:", err);
   });
