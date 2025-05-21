@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hayvonlar Quiz</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      min-height: 100vh;
+    }
+    /* Navbar uchun maxsus rang */
+    .navbar {
+      background-color: #0a3d62;
+			margin-bottom: 30px;
+    }
+    .navbar-brand, .nav-link {
+      color: #d1e7dd !important;
+      font-weight: 600;
+    }
+
+		.navbar-toggler{
+			color: antiquewhite;
+		}
+		
+    .nav-link.active {
+      color: #38ada9 !important;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    /* Container fon va qirralar */
+    .container.shadow-sm {
+      background: #ffffffdd;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+    /* Ballni ko'rsatish */
+    #score {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #38ada9;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    /* Hayvon tugmalari uchun grid */
+    #animal-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 15px;
+		
+			width: 80vw;
+      margin-bottom: 2rem;
+    }
+    #animal-buttons button {
+      font-weight: 600;
+			width: auto	 !important;
+      font-size: 1.1rem;
+      color: #0a3d62;
+      background-color: #d1e7dd;
+      border: none;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 8px rgba(43, 192, 160, 0.3);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    #animal-buttons button:hover {
+      background-color: #38ada9;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(56, 173, 169, 0.7);
+    }
+    #animal-buttons button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(56, 173, 169, 0.5);
+    }
+
+    /* Savol nomi */
+    #quiz-name {
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-align: center;
+      color: #0a3d62;
+      margin-bottom: 1rem;
+      min-height: 50px;
+    }
+
+    /* Javob variantlari uchun tugmalar */
+    #quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    #quiz-options button {
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #0a3d62;
+      background-color: white;
+      border: 2px solid #38ada9;
+      border-radius: 14px;
+      box-shadow: 0 4px 8px rgba(56, 173, 169, 0.3);
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    #quiz-options button:hover {
+      background-color: #38ada9;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(56, 173, 169, 0.7);
+    }
+    #quiz-options button:active {
+      transform: translateY(0);
+      box-shadow: 0 3px 10px rgba(56, 173, 169, 0.5);
+    }
+
+    /* Responsive uchun kichik ekranlarda tugmalar kengroq */
+    @media (max-width: 576px) {
+      #animal-buttons, #quiz-options {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#"><b>SmartKids</b></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../Index.html"><b>Bosh sahifa</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="numbers.html"><b>Sonlar</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><b>Harflar</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./fruits.html"><b>Mevalar</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="animals.html"><b>Hayvonlar</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><b>Diologlar</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><b>Lug'at</b></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container shadow-sm">
+    <h1 class="text-center mb-4" style="color: #0a3d62;">Hayvonlar Quiz</h1>
+    <div id="score">Ball: 0</div>
+
+    <h4 class="mb-3 text-center text-secondary">Hayvon nomlari tugmalari:</h4>
+    <div id="animal-buttons"></div>
+
+    <h4 id="quiz-name"></h4>
+    <div id="quiz-options"></div>
+  </div>
+
+  <!-- JavaScript fayllar -->
+  <script src="../js/animals.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
