@@ -119,10 +119,10 @@ function loadQuiz() {
       if (fruit.name === currentFruit.name) {
         score++;
         updateScore();
-        alert("✅ To‘g‘ri!");
+        // alert("✅ To‘g‘ri!");
         loadQuiz();
       } else {
-        alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
+        // alert("❌ Noto‘g‘ri. Yana urinib ko‘r!");
       }
     };
 

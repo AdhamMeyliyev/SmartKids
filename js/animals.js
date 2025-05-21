@@ -79,10 +79,10 @@ function loadQuiz() {
       if (animal.name === currentAnimal.name) {
         score++;
         updateScore();
-        alert("✅ To‘g‘ri javob!");
+        // alert("✅ To‘g‘ri javob!");
         loadQuiz();
       } else {
-        alert("❌ Noto‘g‘ri javob. Yana urinib ko‘r!");
+        // alert("❌ Noto‘g‘ri javob. Yana urinib ko‘r!");
       }
     };
 
