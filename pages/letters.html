@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
-  <title>Mevalarni o‘rganamiz - SmartKids</title>
+  <title>Harflarni o‘rganamiz - SmartKids</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -44,8 +44,8 @@
       text-shadow: 0 0 2px #f53b57cc;
     }
 
-    /* Meva tugmalari */
-    #fruit-buttons button {
+    /* Harflar tugmalari */
+    #letter-buttons button {
       margin: 0.3rem;
       padding: 1rem 1.5rem;
       border-radius: 12px;
@@ -56,7 +56,7 @@
       color: white;
       border: none;
     }
-    #fruit-buttons button:hover {
+    #letter-buttons button:hover {
       background-color: #d63c4e;
       color: #fff8f9;
       cursor: pointer;
@@ -134,16 +134,16 @@
             <a class="nav-link" aria-current="page" href="numbers.html"><b>Sonlar</b></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./letters.html"><b>Harflar</b></a>
+            <a class="nav-link active" href="./letters.html"><b>Harflar</b></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="./fruits.html"><b>Mevalar</b></a>
+            <a class="nav-link" href="./fruits.html"><b>Mevalar</b></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="animals.html"><b>Hayvonlar</b></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./dialog.html"><b>Diologlar</b></a>
+            <a class="nav-link" href="./dialog.html"><b>Dialoglar</b></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./dictionary.html"><b>Lug'at</b></a>
@@ -154,25 +154,25 @@
   </nav>
 
   <div class="container text-center py-5">
-    <h2 class="text-danger fw-bold mb-4">🍎 Mevalarni O‘rganamiz!</h2>
+    <h2 class="text-danger fw-bold mb-4">🔤 Harflarni O‘rganamiz!</h2>
 
     <div id="score" class="mb-3 fs-4 text-primary fw-bold">Ball: 0</div>
 
-    <div id="fruit-buttons" class="row justify-content-center mb-5"></div>
+    <div id="letter-buttons" class="row justify-content-center mb-5"></div>
 
     <hr class="my-5" />
 
     <div id="quiz-section" class="bg-white p-4 rounded shadow-sm border">
-      <h4 class="mb-3">🧠 Qaysi meva bu: <span id="quiz-name" class="text-danger fs-3">?</span></h4>
+      <h4 class="mb-3">🧠 Qaysi harf bu: <span id="quiz-name" class="text-danger fs-3">?</span></h4>
       <div class="d-flex flex-wrap justify-content-center" id="quiz-options"></div>
     </div>
 
     <hr class="my-5" />
 
-    <a href="numbers.html" class="btn btn-outline-dark mt-4">🔢 Sonlarga qaytish</a>
+    <a href="fruits.html" class="btn btn-outline-dark mt-4">🍎 Mevalarga qaytish</a>
   </div>
 
-  <script src="../js/fruits.js"></script>
+  <script src="../js/letters.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
